@@ -1,0 +1,43 @@
+<div >
+<form (ngSubmit)="save(myForm);myForm.reset()" #myForm="ngForm">
+   
+    <label for="firstName">שם פרטי</label>
+    <input type="text" name="firstName" id="firstName" [(ngModel)]="userService.currentUser.firstName" required  #first="ngModel"/>
+   
+    <label for="lastName"> שם משפחה</label>
+    <input type="text" name="lastName" id="lastName" [(ngModel)]="userService.currentUser.lastName" required #last="ngModel" />
+   
+    <label for="tz">ת"ז</label>
+    <input type="text" name="tz" id="tz" [(ngModel)]="userService.currentUser.tz" required minlength="9" maxlength="9" #tz="ngModel" />
+
+    <label for="dateOfBirth"> תאריך לידה</label>
+    <input type="date" name="dateOfBirth" id="dob" [(ngModel)]="userService.currentUser.dateOfBirth" required #dob="ngModel"/>
+
+    <div *ngFor="let s of sex">
+    <input type="radio"name="sex" value="{{s}}"(change)="radioChangeHandler"[(ngModel)]="userService.currentUser.selectSex" #sex="ngModel" required>
+    <i>{{s}}</i>
+    </div>
+
+    <label for="hmo">קופת חולים</label>
+    <select id="hmo" name="hmo" [(ngModel)]="userService.currentUser.hmo">
+<option *ngFor="let x of arr" [value]="x.id" required>{{x.pharmecy}} </option>
+    </select>
+    
+    <label for="children">מספר ילדים</label>
+    <input type="number" name="children" id="children" [(ngModel)]="this.numChildren" required minlength="0" #children="ngModel"(change)="createArr()" />
+
+<div *ngFor="let c of userService.currentUser.children">
+    <label for="childFirstName">שם</label>
+    <input type="text" name="childFirstName" id="childFirstName" [(ngModel)]="c.childFirstName" required   />
+
+    <label for="dateOfBirth">תאריך לידה</label>
+    <input type="date" name="dateOfBirth" id="dateOfBirth" [(ngModel)]="c.dateOfBirth" required  #dateOfBirth="ngModel" />
+
+    <label for="tz">ת"ז</label>
+    <input type="text" name="tz" id="tz" [(ngModel)]="c.tz" required  minlength="9" maxlength="9" #tz="ngModel" />
+
+    
+</div>
+<input type="submit" (click)="addPerson()" [disabled]="!myForm.valid" />
+</form>
+</div>
